@@ -1,25 +1,114 @@
-import logo from './logo.svg';
-import './App.css';
+import { Component, useState } from 'react'
+import { Container } from 'react-bootstrap'
+import './App.css'
+// class Slider0 extends Component {
+// 	constructor(props) {
+// 		super(props)
+// 		this.state = {
+// 			autoplay: false,
+// 			slide: 0,
+// 		}
+// 	}
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// 	changeSlide = i => {
+// 		this.setState(({ slide }) => ({
+// 			slide: slide + i,
+// 		}))
+// 	}
+
+// 	toggleAutoplay = () => {
+// 		this.setState(({ autoplay }) => ({
+// 			autoplay: !autoplay,
+// 		}))
+// 	}
+
+// 	render() {
+// 		return (
+// 			<>
+// 				<div className='slider w-50 m-auto'>
+// 					<img
+// 						className='d-block w-100'
+// 						src='https://www.planetware.com/wpimages/2020/02/france-in-pictures-beautiful-places-to-photograph-eiffel-tower.jpg'
+// 						alt='slide'
+// 					/>
+// 					<div className='text-center mt-5'>
+// 						Active slide {this.state.slide} <br />{' '}
+// 						{this.state.autoplay ? 'auto' : null}
+// 					</div>
+// 					<div className='buttons mt-3'>
+// 						<button
+// 							className='btn btn-primary me-2'
+// 							onClick={() => this.changeSlide(-1)}
+// 						>
+// 							-1
+// 						</button>
+// 						<button
+// 							className='btn btn-primary me-2'
+// 							onClick={() => this.changeSlide(1)}
+// 						>
+// 							+1
+// 						</button>
+// 						<button
+// 							className='btn btn-primary me-2'
+// 							onClick={this.toggleAutoplay}
+// 						>
+// 							toggle autoplay
+// 						</button>
+// 					</div>
+// 				</div>
+// 			</>
+// 		)
+// 	}
+// }
+
+const Slider = props => {
+	const [slide, setSlide] = useState(0)
+const [autoplay, setAutoplay] = useState(false);
+	function changeSlide(i) {
+		setSlide(slide=>slide + i)
+	}
+  function toggleAutoplay(){
+    setAutoplay(!autoplay);
+  }
+	return (
+		<>
+			<div className='slider w-50 m-auto'>
+				<img
+					className='d-block w-100'
+					src='https://www.planetware.com/wpimages/2020/02/france-in-pictures-beautiful-places-to-photograph-eiffel-tower.jpg'
+					alt='slide'
+				/>
+				<div className='text-center mt-5'>
+					Active slide {slide} <br />
+					{autoplay ? 'auto' : null}
+				</div>
+				<div className='buttons mt-3'>
+					<button
+						className='btn btn-primary me-2'
+						onClick={() => changeSlide(-1)}
+					>
+						-1
+					</button>
+					<button
+						className='btn btn-primary me-2'
+						onClick={() => changeSlide(1)}
+					>
+						+1
+					</button>
+					<button
+						className='btn btn-primary me-2'
+						onClick={toggleAutoplay}
+					>
+						toggle autoplay
+					</button>
+				</div>
+			</div>
+		</>
+	)
 }
 
-export default App;
+function App() {
+	return <Slider />
+}
+
+export default App
