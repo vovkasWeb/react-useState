@@ -1,4 +1,4 @@
-import { Component, useState, useEffect } from 'react'
+import { Component, useState, useEffect, useCallback } from 'react'
 import { Container } from 'react-bootstrap'
 import './App.css'
 // class Slider extends Component {
@@ -74,6 +74,13 @@ const Slider = props => {
 	function logging() {
 		console.log('log')
 	}
+	const getSomeImages = useCallback(() => {
+		console.log('fetching')
+		return [
+			'https://www.imgonline.com.ua/examples/bee-on-daisy.jpg',
+			'https://www.imgonline.com.ua/examples/orange-flowers.jpg',
+		]
+	}, [])
 
 	useEffect(() => {
 		document.title = `Slide ${slide}`
@@ -87,7 +94,7 @@ const Slider = props => {
 	useEffect(() => {
 		console.log('autoplay')
 	}, [autoplay])
-  
+
 	function changeSlide(i) {
 		setSlide(slide => slide + i)
 	}
@@ -97,11 +104,10 @@ const Slider = props => {
 	return (
 		<>
 			<div className='slider w-50 m-auto'>
-				<img
-					className='d-block w-100'
-					src='https://www.planetware.com/wpimages/2020/02/france-in-pictures-beautiful-places-to-photograph-eiffel-tower.jpg'
-					alt='slide'
-				/>
+				{/* {getSomeImages().map((url, i) => {
+					return <img key={i} className='d-block w-100' src={url} alt='slide' />
+				})} */}
+        <Slide getSomeImages={getSomeImages}/>
 				<div className='text-center mt-5'>
 					Active slide {slide} <br />
 					{autoplay ? 'auto' : null}
@@ -128,6 +134,18 @@ const Slider = props => {
 	)
 }
 
+const Slide = ({ getSomeImages }) => {
+	const [images, setImages] = useState([])
+
+	useEffect(() => {
+		setImages(getSomeImages())
+	}, [getSomeImages])
+
+  return (
+    <>{images.map((url,i) =><img key={i} className='d-block w-100' src={url} alt='slide' />)}</>
+  )
+
+}
 function App() {
 	const [slide, setSlide] = useState(true)
 
