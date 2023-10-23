@@ -1,7 +1,7 @@
-import { Component, useState } from 'react'
+import { Component, useState, useEffect } from 'react'
 import { Container } from 'react-bootstrap'
 import './App.css'
-// class Slider0 extends Component {
+// class Slider extends Component {
 // 	constructor(props) {
 // 		super(props)
 // 		this.state = {
@@ -9,6 +9,12 @@ import './App.css'
 // 			slide: 0,
 // 		}
 // 	}
+//   componentDidMount(){
+//     document.title =`Slide ${this.state.slide}`;
+//   }
+//   componentDidUpdate(){
+//       document.title = `Slide ${this.state.slide}`
+//   }
 
 // 	changeSlide = i => {
 // 		this.setState(({ slide }) => ({
@@ -63,13 +69,31 @@ import './App.css'
 
 const Slider = props => {
 	const [slide, setSlide] = useState(0)
-const [autoplay, setAutoplay] = useState(false);
-	function changeSlide(i) {
-		setSlide(slide=>slide + i)
+	const [autoplay, setAutoplay] = useState(false)
+
+	function logging() {
+		console.log('log')
 	}
-  function toggleAutoplay(){
-    setAutoplay(!autoplay);
-  }
+
+	useEffect(() => {
+		document.title = `Slide ${slide}`
+		window.addEventListener('click', logging)
+
+		return () => {
+			window.removeEventListener('click', logging)
+		}
+	}, [slide])
+
+	useEffect(() => {
+		console.log('autoplay')
+	}, [autoplay])
+  
+	function changeSlide(i) {
+		setSlide(slide => slide + i)
+	}
+	function toggleAutoplay() {
+		setAutoplay(!autoplay)
+	}
 	return (
 		<>
 			<div className='slider w-50 m-auto'>
@@ -95,10 +119,7 @@ const [autoplay, setAutoplay] = useState(false);
 					>
 						+1
 					</button>
-					<button
-						className='btn btn-primary me-2'
-						onClick={toggleAutoplay}
-					>
+					<button className='btn btn-primary me-2' onClick={toggleAutoplay}>
 						toggle autoplay
 					</button>
 				</div>
@@ -108,7 +129,20 @@ const [autoplay, setAutoplay] = useState(false);
 }
 
 function App() {
-	return <Slider />
+	const [slide, setSlide] = useState(true)
+
+	return (
+		<>
+			<button
+				onClick={() => {
+					setSlide(false)
+				}}
+			>
+				l
+			</button>
+			{slide ? <Slider /> : null}
+		</>
+	)
 }
 
 export default App
