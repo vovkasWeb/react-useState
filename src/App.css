@@ -1,5 +1,9 @@
+
 .App {
   text-align: center;
+}
+.text-danger{
+  color: red;
 }
 
 .App-logo {
